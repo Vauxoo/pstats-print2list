@@ -12,7 +12,9 @@ env:
   - TOXENV=pypy
 
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
-install: pip install -U tox
+install:
+  - pip install -U tox
+  - pip install -r requirements_dev.txt
 
 script:
   # command to generate demo profile stats files
@@ -20,16 +22,21 @@ script:
 
   # command to run tests, e.g. python setup.py test
   - tox
+  - make lint
+  - make coverage
+
+after_success:
+  - coveralls
 
 # After you create the Github repo and add it to Travis, run the
 # travis_pypi_setup.py script to finish PyPI deployment setup
 deploy:
   provider: pypi
   distributions: sdist bdist_wheel
-  user: moylop260
+  user: vauxoo
   password:
-    secure: PLEASE_REPLACE_ME
+    secure: yX4ICrVOxcL/qxoUv83FxY381kT1yTYgRmACPdQJquOal4/PIcWYi0rqXg5zIQJK+YESnPyoHPyt4kOVUIghQtyvoYqp2rCQIVgw1B2FgKUXnZeGWOlwf5DPc/OPvOHgsMFX4gJS+3qU2VwTUKTvC6azw17lu0K5QbDlcAX0EjbDfRQGTv/YNVKH/j8G+RpDz5KIyT5gCIBlyQYW7dQ04lEUBJ4Gd7zMXOdaZLfiPQrfYFMn2lpt9VkEz+pyVWWSW3toJlXfXysS2aZem1rmbvqxuUDup8PPl/CfdUBAEOONHa3svgKdsb2e3T3Hb6FryVnvjpvitMVEbouZd6meHSGYBCC7keuTaY2s7lMS+qbV5JFHNTQUgKKKgNibUFj6VdDaZ/btCQZDJyRj9pnXBnAvYanuzJK64m3uOlJ2jvh7s/84l6MM+AIiYj4Pia+2g4k6LxARZRJ/Klsj696KmXJBavH7/B+0OGBWLldhY6JRRydmStf/+PguzuUovP4f9wYoelANTXMEqrc/5+bp+T4lpsgl9uFQlvpF5VBbZGTt2/TZnWVVmi+5ubpdkxlcLDisFZ35oeTJ1b+pop5jnnAfFdiL6k3u1tdB/9J3z+3JaeC2IijwwzQxrwE5jdLh3oEJSTRzyOo1UgyKfE0daeCYtdSVxJeS1FOZj7gY4xY=
   on:
     tags: true
-    repo: moylop260/pstats_filter
+    repo: Vauxoo/pstats-print2list
     condition: $TOXENV == py27

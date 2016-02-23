@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
@@ -33,24 +32,25 @@ def is_exclude(fname, exclude_fnames):
 def print_stats(fnames, filter_fnames=None, exclude_fnames=None,
                 sort=None, sort_reverse=None, limit=None):
     """Print stats with a filter or exclude filenames, sort index and limit
+
     :param list fnames: cProfile standard files to process.
     :param list filter_fnames: Relative paths to filter and show them.
     :param list exclude_fnames: Relative paths to avoid show them.
     :param str sort: Standard `pstats` key of value to sort the result.
-      'calls' (call count)
-      'cumulative' (cumulative time)
-      'cumtime' (cumulative time)
-      'file' (file name)
-      'filename' (file name)
-      'module' (file name)
-      'ncalls' (call count)
-      'pcalls' (primitive call count)
-      'line' (line number)
-      'name' (function name)
-      'nfl' (name/file/line)
-      'stdname' (standard name)
-      'time' (internal time)
-      'tottime' (internal time)
+        \n\t\t\t'calls' (call count)
+        \n\t\t\t'cumulative' (cumulative time)
+        \n\t\t\t'cumtime' (cumulative time)
+        \n\t\t\t'file' (file name)
+        \n\t\t\t'filename' (file name)
+        \n\t\t\t'module' (file name)
+        \n\t\t\t'ncalls' (call count)
+        \n\t\t\t'pcalls' (primitive call count)
+        \n\t\t\t'line' (line number)
+        \n\t\t\t'name' (function name)
+        \n\t\t\t'nfl' (name/file/line)
+        \n\t\t\t'stdname' (standard name)
+        \n\t\t\t'time' (internal time)
+        \n\t\t\t'tottime' (internal time)
     :param bool sort_reverse: Reverse sort order.
     :param int limit: Limit max result.
     :returns: Directly print of `pstats` summarize info.

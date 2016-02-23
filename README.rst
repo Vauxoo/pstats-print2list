@@ -1,22 +1,24 @@
 ===============================
-pstats_filter
+pstats_print2list
 ===============================
 
-.. image:: https://img.shields.io/pypi/v/pstats_filter.svg
-        :target: https://pypi.python.org/pypi/pstats_filter
+.. image:: https://img.shields.io/pypi/v/pstats_print2list.svg
+        :target: https://pypi.python.org/pypi/pstats_print2list
 
-.. image:: https://img.shields.io/travis/moylop260/pstats_filter.svg
-        :target: https://travis-ci.org/moylop260/pstats_filter
+.. image:: https://img.shields.io/travis/Vauxoo/pstats-filter.svg
+        :target: https://travis-ci.org/Vauxoo/pstats-filter
 
-.. image:: https://readthedocs.org/projects/pstats_filter/badge/?version=latest
-        :target: https://readthedocs.org/projects/pstats_filter/?badge=latest
+.. image:: https://readthedocs.org/projects/pstats_print2list/badge/?version=latest
+        :target: https://readthedocs.org/projects/pstats_print2list/?badge=latest
         :alt: Documentation Status
 
+.. image:: https://coveralls.io/repos/github/Vauxoo/pstats-print2list/badge.svg?branch=master 
+        :target: https://coveralls.io/github/Vauxoo/pstats-print2list?branch=master
 
 cProfile pstats filter result andd group and sort
 
 * Free software: ISC license
-* Documentation: https://pstats_filter.readthedocs.org.
+* Documentation: https://pstats_print2list.readthedocs.org.
 
 Features
 --------

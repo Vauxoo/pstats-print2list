@@ -24,7 +24,7 @@ test_requirements = [
 
 setup(
     name='pstats_print2list',
-    version='0.1.0',
+    version='0.1.1',
     description="cProfile pstats filter result andd group and sort",
     long_description=readme + '\n\n' + history,
     author="Vauxoo",

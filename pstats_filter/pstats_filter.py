@@ -31,9 +31,10 @@ def is_exclude(fname, exclude_fnames):
     return False
 
 
-def print_stats(fname, filter_fnames=None, exclude_fnames=None,
+def print_stats(fnames, filter_fnames=None, exclude_fnames=None,
                 sort=None, sort_reverse=None, limit=None):
     """Print stats with a filter or exclude filenames, sort index and limit
+    :param list fnames: cProfile standard files to process.
     :param list filter_fnames: Relative paths to filter and show them.
     :param list exclude_fnames: Relative paths to avoid show them.
     :param str sort: Standard `pstats` key of value to sort the result.
@@ -56,18 +57,23 @@ def print_stats(fname, filter_fnames=None, exclude_fnames=None,
     :returns: Directly print of `pstats` summarize info.
     """
 
-    if not os.path.isfile(fname):
-        print("No cProfile stats to report.")
-        return False
+    if isinstance(fnames, basestring):
+        fnames = [fnames]
 
     stream = StringIO.StringIO()
+
     try:
-        stats = pstats.Stats(fname, stream=stream)
+        stats = pstats.Stats(fnames[0], stream=stream)
+        for fname in fnames[1:]:
+            stats.add(fname)
     except TypeError:
         print("No cProfile stats valid.")
         return False
     except EOFError:
         print("Empty file cProfile stats valid.")
+        return False
+    except IOError:
+        print("Error to open file.")
         return False
 
     if sort:

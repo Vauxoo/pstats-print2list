@@ -97,13 +97,13 @@ class TestPstatsFilter(unittest.TestCase):
         self.assertEqual(os.path.basename(result[1]['file']), 'fib.py')
 
     def test_100_sort_print_pstats(self):
-        result = pstats_filter.print_stats(self.fstats_fib, sort='ncalls')
+        result = pstats_filter.print_stats(self.fstats_fib, sort='calls')
         self.assertEqual(len(result), 2)
         self.assertEqual(os.path.basename(result[0]['file']), 'fib.py')
         self.assertEqual(os.path.basename(result[1]['file']), 'fib_seq.py')
 
     def test_110_sort_reverse_print_pstats(self):
-        result = pstats_filter.print_stats(self.fstats_fib, sort='ncalls',
+        result = pstats_filter.print_stats(self.fstats_fib, sort='calls',
                                            sort_reverse=True)
         self.assertEqual(len(result), 2)
         self.assertEqual(os.path.basename(result[0]['file']), 'fib_seq.py')

@@ -26,10 +26,10 @@ script:
 deploy:
   provider: pypi
   distributions: sdist bdist_wheel
-  user: moylop260
+  user: Vauxoo
   password:
     secure: PLEASE_REPLACE_ME
   on:
     tags: true
-    repo: moylop260/pstats_filter
+    repo: Vauxoo/pstats-print2list
     condition: $TOXENV == py27

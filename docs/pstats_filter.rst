@@ -1,13 +1,13 @@
-pstats_filter package
+pstats_print2list package
 =====================
 
 Submodules
 ----------
 
-pstats_filter.pstats_filter module
+pstats_print2list.pstats_print2list module
 ----------------------------------
 
-.. automodule:: pstats_filter.pstats_filter
+.. automodule:: pstats_print2list.pstats_print2list
     :members:
     :undoc-members:
     :show-inheritance:
@@ -16,7 +16,7 @@ pstats_filter.pstats_filter module
 Module contents
 ---------------
 
-.. automodule:: pstats_filter
+.. automodule:: pstats_print2list
     :members:
     :undoc-members:
     :show-inheritance:

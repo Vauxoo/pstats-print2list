@@ -47,7 +47,7 @@ clean-test:
 	rm -fr tests/demo/*.stats
 
 lint:
-	flake8 pstats_filter tests
+	flake8 pstats_print2list tests
 
 test:
 	python ./tests/demo/profile_fibonacci_raw.py
@@ -58,15 +58,15 @@ test-all:
 
 coverage:
 	python ./tests/demo/profile_fibonacci_raw.py
-	coverage run --source pstats_filter setup.py test
+	coverage run --source pstats_print2list setup.py test
 	coverage report -m
 	coverage html
 	$(BROWSER) htmlcov/index.html
 
 docs:
-	rm -f docs/pstats_filter.rst
+	rm -f docs/pstats_print2list.rst
 	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ pstats_filter
+	sphinx-apidoc -o docs/ pstats_print2list
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	$(BROWSER) docs/_build/html/index.html

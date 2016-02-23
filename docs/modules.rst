@@ -1,7 +1,7 @@
-pstats_filter
+pstats_print2list
 =============
 
 .. toctree::
    :maxdepth: 4
 
-   pstats_filter
+   pstats_print2list

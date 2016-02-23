@@ -4,23 +4,47 @@
 import os
 import pstats
 import sys
+import StringIO
+import re
+
+
+def is_fname_match(fname, fmatch_list):
+    if isinstance(fmatch_list, basestring):
+        fmatch_list = [fmatch_list]
+    if not fmatch_list:
+        return True
+    for fmatch in fmatch_list:
+        if fmatch in fname:
+            return True
+    return False
+
+
+def is_exclude(fname, exclude_fnames):
+    if isinstance(exclude_fnames, basestring):
+        exclude_fnames = [exclude_fnames]
+    for exclude_fname in exclude_fnames:
+        if exclude_fname in fname:
+            return True
+    return False
 
 
 def print_stats(filter_fnames=None, exclude_fnames=None,
-                sort_index=0, limit=0):
+                sort_index=0, limit=None, fname=None):
     """Print stats with a filter or exclude filenames, sort index and limit
-    :param filter_fnames: List of relative paths to filter and show them.
-    :param exclude_fnames: List of relative paths to avoid show them.
-    :param sort_index: Integer with `pstats tuple` index to sort the result.
-    :param limit: Integer to limit max result.
-    :return: Directly print of `pstats` summarize info.
+    :param list filter_fnames: Relative paths to filter and show them.
+    :param list exclude_fnames: Relative paths to avoid show them.
+    :param int sort_index: Index of `pstats tuple` to sort the result.
+    :param int limit: Limit max result.
+    :returns: Directly print of `pstats` summarize info.
     """
     if filter_fnames is None:
         filter_fnames = ['.py']
     if exclude_fnames is None:
         exclude_fnames = []
 
-    fname = os.path.expanduser('~/.openerp_server.stats')
+    if fname is None:
+        fname = os.path.expanduser('~/.openerp_server.stats')
+
     if not os.path.isfile(fname):
         print "No cProfile stats to report."
         return False
@@ -29,52 +53,22 @@ def print_stats(filter_fnames=None, exclude_fnames=None,
     except TypeError:
         print "No cProfile stats valid."
         return False
-    stats = fstats.stats
 
-    stats_filter = {}
-    for stat in stats:
-        for tuple_stats in stats[stat][4].keys():
-            for filter_fname in filter_fnames:
-                if filter_fname in tuple_stats[0]:
-                    exclude = False
-                    for exclude_fname in exclude_fnames:
-                        if exclude_fname in tuple_stats[0]:
-                            exclude = True
-                            break
-                    if exclude:
-                        break
-                    old_fstats = stats_filter.setdefault(
-                        tuple_stats, (0, 0, 0, 0))
-                    new_fstats = stats[stat][4][tuple_stats]
-                    sum_fstats = tuple([
-                        old_item + new_item
-                        for old_item, new_item in zip(old_fstats, new_fstats)])
-                    stats_filter[tuple_stats] = sum_fstats
-                    break
-
-    def sort_stats(dict_stats, index=0, reverse=True):
-        """param index: Index of tuple stats standard to sort
-        :return: List of items ordered by index value"""
-        return sorted(dict_stats.items(), key=lambda x: x[1][index],
-                      reverse=reverse)
-
-    # fstats.sort_stats('cumulative')
-    stats_filter_sorted = sort_stats(stats_filter, sort_index)
-    if limit:
-        stats_filter_sorted = stats_filter_sorted[:limit]
-
-    for file_data, stats in stats_filter_sorted:
-        print "{0:10d} {1:10d} {2:10.6f} {3:10.6f}".format(*stats),
-        print "%s:%s %s" % file_data
-    return True
-
-if __name__ == '__main__':
-    if len(sys.argv) == 1:
-        sys.argv.append('.py')
-    fnames_filter = sys.argv[1].split(',')
-    if len(sys.argv) == 2:
-        fnames_exclude = None
-    else:
-        fnames_exclude = sys.argv[2].split(',')
-    print_stats(fnames_filter, fnames_exclude)
-
+    stream = StringIO.StringIO()
+    stats = pstats.Stats(fname, stream=stream)
+    stats.print_stats()
+    stream.seek(0)
+    fields_list = ['ncalls', 'tottime', 'percall', 'cumtime', 'percall2', 'file', 'lineno', 'method']
+    line_stats_re = re.compile(r'(?P<ncalls>\d+/?\d+)\s+(?P<tottime>\d+\.?\d+)\s+(?P<percall>\d+\.?\d+)\s+(?P<cumtime>\d+\.?\d+)\s+(?P<percall2>\d+\.?\d+)\s+(?P<file>.*):(?P<lineno>\d+)(?P<method>.*)')
+    stats_list = []
+    count = 0
+    for line in stream:
+        line = line.strip('\r\n ')
+        line_stats_match = line_stats_re.match(line) if line else None
+        fname = line_stats_match.group('file') if line_stats_match else None
+        if fname and is_fname_match(fname, filter_fnames) and not is_exclude(fname, exclude_fnames):
+            stats_list.append(dict([(field, line_stats_match.group(field)) for field in fields_list]))
+            count += 1
+            if limit and count >= limit:
+                break
+    return stats_list

@@ -44,17 +44,20 @@ clean-test:
 	rm -fr .tox/
 	rm -f .coverage
 	rm -fr htmlcov/
+	rm -fr tests/demo/*.stats
 
 lint:
 	flake8 pstats_filter tests
 
 test:
+	python ./tests/demo/profile_fibonacci_raw.py
 	python setup.py test
 
 test-all:
 	tox
 
 coverage:
+	python ./tests/demo/profile_fibonacci_raw.py
 	coverage run --source pstats_filter setup.py test
 	coverage report -m
 	coverage html

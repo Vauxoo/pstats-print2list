@@ -4,9 +4,9 @@
 language: python
 
 env:
-  - TOXENV=py35
-  - TOXENV=py34
-  - TOXENV=py33
+#   - TOXENV=py35
+#   - TOXENV=py34
+#   - TOXENV=py33
   - TOXENV=py27
   - TOXENV=py26
   - TOXENV=pypy
@@ -14,8 +14,12 @@ env:
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install: pip install -U tox
 
-# command to run tests, e.g. python setup.py test
-script: tox
+script:
+  # command to generate demo profile stats files
+  - python ./tests/demo/profile_fibonacci_raw.py
+
+  # command to run tests, e.g. python setup.py test
+  - tox
 
 # After you create the Github repo and add it to Travis, run the
 # travis_pypi_setup.py script to finish PyPI deployment setup

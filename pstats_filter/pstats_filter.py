@@ -32,7 +32,7 @@ def is_exclude(fname, exclude_fnames):
 
 
 def print_stats(fname, filter_fnames=None, exclude_fnames=None,
-                sort=None, limit=None):
+                sort=None, sort_reverse=None, limit=None):
     """Print stats with a filter or exclude filenames, sort index and limit
     :param list filter_fnames: Relative paths to filter and show them.
     :param list exclude_fnames: Relative paths to avoid show them.
@@ -51,6 +51,7 @@ def print_stats(fname, filter_fnames=None, exclude_fnames=None,
       'stdname' (standard name)
       'time' (internal time)
       'tottime' (internal time)
+    :param bool sort_reverse: Reverse sort order.
     :param int limit: Limit max result.
     :returns: Directly print of `pstats` summarize info.
     """
@@ -71,6 +72,8 @@ def print_stats(fname, filter_fnames=None, exclude_fnames=None,
 
     if sort:
         stats.sort_stats(sort)
+    if sort_reverse:
+        stats.reverse_order()
     stats.print_stats()
     stream.seek(0)
     fields_list = [

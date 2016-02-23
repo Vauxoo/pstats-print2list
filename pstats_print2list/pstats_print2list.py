@@ -29,10 +29,9 @@ def is_exclude(fname, exclude_fnames):
     return False
 
 
-def print_stats(fnames, filter_fnames=None, exclude_fnames=None,
-                sort=None, sort_reverse=None, limit=None):
-    """Print stats with a filter or exclude filenames, sort index and limit
-
+def get_pstats_print2list(fnames, filter_fnames=None, exclude_fnames=None,
+                          sort=None, sort_reverse=None, limit=None):
+    """Print stats with a filter or exclude filenames, sort index and limit.
     :param list fnames: cProfile standard files to process.
     :param list filter_fnames: Relative paths to filter and show them.
     :param list exclude_fnames: Relative paths to avoid show them.
@@ -53,14 +52,12 @@ def print_stats(fnames, filter_fnames=None, exclude_fnames=None,
         \n\t\t\t'tottime' (internal time)
     :param bool sort_reverse: Reverse sort order.
     :param int limit: Limit max result.
-    :returns: Directly print of `pstats` summarize info.
+    :returns: List with `pstats` print result after filters.
     """
 
     if isinstance(fnames, basestring):
         fnames = [fnames]
-
     stream = StringIO.StringIO()
-
     try:
         stats = pstats.Stats(fnames[0], stream=stream)
         for fname in fnames[1:]:

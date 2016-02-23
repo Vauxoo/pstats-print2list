@@ -14,6 +14,7 @@ import unittest
 from pstats_filter import pstats_filter
 from cProfile import Profile
 
+
 class TestPstatsFilter(unittest.TestCase):
 
     def setUp(self):
@@ -89,6 +90,18 @@ class TestPstatsFilter(unittest.TestCase):
             filter_fnames=[], exclude_fnames=None, limit=None,
             fname=fname)
         self.assertFalse(result)
+
+    def test_090_sort_print_pstats(self):
+        result = pstats_filter.print_stats(self.fstats_fib, sort='cumulative')
+        self.assertEqual(len(result), 2)
+        self.assertEqual(os.path.basename(result[0]['file']), 'fib_seq.py')
+        self.assertEqual(os.path.basename(result[1]['file']), 'fib.py')
+
+    def test_100_sort_print_pstats(self):
+        result = pstats_filter.print_stats(self.fstats_fib, sort='ncalls')
+        self.assertEqual(len(result), 2)
+        self.assertEqual(os.path.basename(result[0]['file']), 'fib.py')
+        self.assertEqual(os.path.basename(result[1]['file']), 'fib_seq.py')
 
 
 if __name__ == '__main__':

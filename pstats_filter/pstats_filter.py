@@ -32,11 +32,25 @@ def is_exclude(fname, exclude_fnames):
 
 
 def print_stats(fname, filter_fnames=None, exclude_fnames=None,
-                sort_index=0, limit=None):
+                sort=None, limit=None):
     """Print stats with a filter or exclude filenames, sort index and limit
     :param list filter_fnames: Relative paths to filter and show them.
     :param list exclude_fnames: Relative paths to avoid show them.
-    :param int sort_index: Index of `pstats tuple` to sort the result.
+    :param str sort: Standard `pstats` key of value to sort the result.
+      'calls' (call count)
+      'cumulative' (cumulative time)
+      'cumtime' (cumulative time)
+      'file' (file name)
+      'filename' (file name)
+      'module' (file name)
+      'ncalls' (call count)
+      'pcalls' (primitive call count)
+      'line' (line number)
+      'name' (function name)
+      'nfl' (name/file/line)
+      'stdname' (standard name)
+      'time' (internal time)
+      'tottime' (internal time)
     :param int limit: Limit max result.
     :returns: Directly print of `pstats` summarize info.
     """
@@ -55,6 +69,8 @@ def print_stats(fname, filter_fnames=None, exclude_fnames=None,
         print("Empty file cProfile stats valid.")
         return False
 
+    if sort:
+        stats.sort_stats(sort)
     stats.print_stats()
     stream.seek(0)
     fields_list = [

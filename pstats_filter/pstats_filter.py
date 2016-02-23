@@ -3,7 +3,6 @@
 
 from __future__ import print_function
 
-import os
 import pstats
 import re
 import StringIO

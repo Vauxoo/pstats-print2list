@@ -10,9 +10,9 @@ Tests for `pstats_filter` module.
 
 import os
 import unittest
+from cProfile import Profile
 
 from pstats_filter import pstats_filter
-from cProfile import Profile
 
 
 class TestPstatsFilter(unittest.TestCase):

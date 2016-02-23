@@ -1,6 +1,6 @@
+import os
 import profile
 import pstats
-import os
 
 from fib_seq import fib_seq  # noqa
 

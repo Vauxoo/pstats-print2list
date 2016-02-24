@@ -7,12 +7,15 @@ import re
 import StringIO
 
 
-FIELD_LIST = [
-    'ncalls',
-    'tottime', 'tt_percall',
-    'cumtime', 'ct_percall',
-    'file', 'lineno', 'method',
-]
+def get_field_list():
+    "Get field list of pstats report standard."
+    field_list = [
+        'ncalls',
+        'tottime', 'tt_percall',
+        'cumtime', 'ct_percall',
+        'file', 'lineno', 'method',
+    ]
+    return field_list
 
 
 def is_fname_match(fname, fmatch_list):
@@ -86,10 +89,11 @@ def get_pstats_print2list(fnames, filter_fnames=None, exclude_fnames=None,
         stats.reverse_order()
     stats.print_stats()
     stream.seek(0)
+    field_list = get_field_list()
     line_stats_re = re.compile(
         r'(?P<%s>\d+/?\d+)\s+(?P<%s>\d+\.?\d+)\s+(?P<%s>\d+\.?\d+)\s+'
         r'(?P<%s>\d+\.?\d+)\s+(?P<%s>\d+\.?\d+)\s+(?P<%s>.*):(?P<%s>\d+)'
-        r'(?P<%s>.*)' % tuple(FIELD_LIST))
+        r'(?P<%s>.*)' % tuple(field_list))
     stats_list = []
     count = 0
     for line in stream:
@@ -99,7 +103,7 @@ def get_pstats_print2list(fnames, filter_fnames=None, exclude_fnames=None,
         if fname and is_fname_match(fname, filter_fnames) and \
                 not is_exclude(fname, exclude_fnames):
             stats_list.append(dict([(field, line_stats_match.group(field))
-                              for field in FIELD_LIST]))
+                              for field in field_list]))
             count += 1
             if limit and count >= limit:
                 break

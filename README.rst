@@ -5,8 +5,8 @@ pstats_print2list
 .. image:: https://img.shields.io/pypi/v/pstats_print2list.svg
         :target: https://pypi.python.org/pypi/pstats_print2list
 
-.. image:: https://img.shields.io/travis/Vauxoo/pstats-filter.svg
-        :target: https://travis-ci.org/Vauxoo/pstats-filter
+.. image:: https://img.shields.io/travis/Vauxoo/pstats-print2list.svg
+        :target: https://travis-ci.org/Vauxoo/pstats-print2list
 
 .. image:: https://readthedocs.org/projects/pstats_print2list/badge/?version=latest
         :target: https://readthedocs.org/projects/pstats_print2list/?badge=latest

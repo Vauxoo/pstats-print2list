@@ -7,6 +7,14 @@ import re
 import StringIO
 
 
+FIELD_LIST = [
+    'ncalls',
+    'tottime', 'tt_percall',
+    'cumtime', 'ct_percall',
+    'file', 'lineno', 'method',
+]
+
+
 def is_fname_match(fname, fmatch_list):
     if isinstance(fmatch_list, basestring):
         fmatch_list = [fmatch_list]
@@ -78,11 +86,10 @@ def get_pstats_print2list(fnames, filter_fnames=None, exclude_fnames=None,
         stats.reverse_order()
     stats.print_stats()
     stream.seek(0)
-    fields_list = [
-        'ncalls', 'tottime', 'percall', 'cumtime', 'percall2', 'file',
-        'lineno', 'method',
-    ]
-    line_stats_re = re.compile(r'(?P<ncalls>\d+/?\d+)\s+(?P<tottime>\d+\.?\d+)\s+(?P<percall>\d+\.?\d+)\s+(?P<cumtime>\d+\.?\d+)\s+(?P<percall2>\d+\.?\d+)\s+(?P<file>.*):(?P<lineno>\d+)(?P<method>.*)')  # noqa
+    line_stats_re = re.compile(
+        r'(?P<%s>\d+/?\d+)\s+(?P<%s>\d+\.?\d+)\s+(?P<%s>\d+\.?\d+)\s+'
+        r'(?P<%s>\d+\.?\d+)\s+(?P<%s>\d+\.?\d+)\s+(?P<%s>.*):(?P<%s>\d+)'
+        r'(?P<%s>.*)' % tuple(FIELD_LIST))
     stats_list = []
     count = 0
     for line in stream:
@@ -92,7 +99,7 @@ def get_pstats_print2list(fnames, filter_fnames=None, exclude_fnames=None,
         if fname and is_fname_match(fname, filter_fnames) and \
                 not is_exclude(fname, exclude_fnames):
             stats_list.append(dict([(field, line_stats_match.group(field))
-                              for field in fields_list]))
+                              for field in FIELD_LIST]))
             count += 1
             if limit and count >= limit:
                 break

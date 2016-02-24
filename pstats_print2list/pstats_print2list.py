@@ -63,7 +63,8 @@ def get_pstats_print2list(fnames, filter_fnames=None, exclude_fnames=None,
         \n\t\t\t'tottime' (internal time)
     :param bool sort_reverse: Reverse sort order.
     :param int limit: Limit max result.
-    :returns: List with `pstats` print result after filters.
+    :returns: List of dicts with `pstats` print result after filters, sorted
+        and limited.
     """
 
     if isinstance(fnames, basestring):
@@ -108,3 +109,18 @@ def get_pstats_print2list(fnames, filter_fnames=None, exclude_fnames=None,
             if limit and count >= limit:
                 break
     return stats_list
+
+
+def print_pstats_list(pstats, pformat=None):
+    """Print list of pstats dict formatted
+    :param list pstats: pstats dicts to print
+    :param str format: String.format style to show fields with keys:
+        ncalls, tottime, tt_percall, cumtime, ct_percall, file, lineno, method
+        Default: "{ncalls:10s} {tottime:10s} {tt_percall:10s} {cumtime:10s}
+                 {ct_percall:10s} {file}:{lineno} {method}"
+    :return: Directly print of result formatted"""
+    if pformat is None:
+        pformat = "{ncalls:10s} {tottime:10s} {tt_percall:10s} " + \
+            "{cumtime:10s} {ct_percall:10s} {file}:{lineno} {method}"
+    for pstat_line in [dict(zip(get_field_list(), get_field_list()))] + pstats:
+        print(pformat.format(**pstat_line))

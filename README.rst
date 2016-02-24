@@ -8,17 +8,21 @@ pstats_print2list
 .. image:: https://img.shields.io/travis/Vauxoo/pstats-print2list.svg
         :target: https://travis-ci.org/Vauxoo/pstats-print2list
 
-.. image:: https://readthedocs.org/projects/pstats_print2list/badge/?version=latest
-        :target: https://readthedocs.org/projects/pstats_print2list/?badge=latest
-        :alt: Documentation Status
+.. .. image:: https://readthedocs.org/projects/pstats_print2list/badge/?version=latest
+..         :target: https://readthedocs.org/projects/pstats_print2list/?badge=latest
+..         :alt: Documentation Status
 
 .. image:: https://coveralls.io/repos/github/Vauxoo/pstats-print2list/badge.svg?branch=master 
         :target: https://coveralls.io/github/Vauxoo/pstats-print2list?branch=master
 
+.. image:: https://img.shields.io/pypi/dm/pstats_print2list.svg
+        :target: https://pypi.python.org/pypi/pstats_print2list
+
+
 Add to pstats library of cProfile the feature of get the result in a list with filters, limit and sort.
 
 * Free software: ISC license
-* Documentation: https://pstats_print2list.readthedocs.org.
+* Documentation: https://pythonhosted.org/pstats_print2list/
 
 Features
 --------

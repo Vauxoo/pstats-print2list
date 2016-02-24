@@ -88,15 +88,14 @@ def get_pstats_print2list(fnames, filter_fnames=None, exclude_fnames=None,
         stats.sort_stats(sort)
     if sort_reverse:
         stats.reverse_order()
-    stats.print_stats()
+    stats.print_stats(limit)
     stream.seek(0)
     field_list = get_field_list()
     line_stats_re = re.compile(
         r'(?P<%s>\d+/?\d+)\s+(?P<%s>\d+\.?\d+)\s+(?P<%s>\d+\.?\d+)\s+'
         r'(?P<%s>\d+\.?\d+)\s+(?P<%s>\d+\.?\d+)\s+(?P<%s>.*):(?P<%s>\d+)'
-        r'(?P<%s>.*)' % tuple(field_list))
+        r'\((?P<%s>.*)\)' % tuple(field_list))
     stats_list = []
-    count = 0
     for line in stream:
         line = line.strip('\r\n ')
         line_stats_match = line_stats_re.match(line) if line else None
@@ -105,9 +104,6 @@ def get_pstats_print2list(fnames, filter_fnames=None, exclude_fnames=None,
                 not is_exclude(fname, exclude_fnames):
             stats_list.append(dict([(field, line_stats_match.group(field))
                               for field in field_list]))
-            count += 1
-            if limit and count >= limit:
-                break
     return stats_list
 
 
@@ -117,10 +113,10 @@ def print_pstats_list(pstats, pformat=None):
     :param str format: String.format style to show fields with keys:
         ncalls, tottime, tt_percall, cumtime, ct_percall, file, lineno, method
         Default: "{ncalls:10s} {tottime:10s} {tt_percall:10s} {cumtime:10s}
-                 {ct_percall:10s} {file}:{lineno} {method}"
+                 {ct_percall:10s} {file}:{lineno} ({method})"
     :return: Directly print of result formatted"""
     if pformat is None:
         pformat = "{ncalls:10s} {tottime:10s} {tt_percall:10s} " + \
-            "{cumtime:10s} {ct_percall:10s} {file}:{lineno} {method}"
+            "{cumtime:10s} {ct_percall:10s} {file}:{lineno} ({method})"
     for pstat_line in [dict(zip(get_field_list(), get_field_list()))] + pstats:
         print(pformat.format(**pstat_line))

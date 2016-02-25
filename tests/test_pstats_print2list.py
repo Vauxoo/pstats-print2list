@@ -124,7 +124,16 @@ class TestPstatsPrint2list(unittest.TestCase):
 
     def test_140_print_list(self):
         pstats_list = get_pstats_print2list(self.fstats_fib)
-        print_pstats_list(pstats_list)
+        self.assertTrue(print_pstats_list(pstats_list))
+
+    def test_150_print_empty_list(self):
+        pstats_list = get_pstats_print2list(self.fstats_fib, 'without_files')
+        self.assertEqual(pstats_list, [])
+        self.assertFalse(print_pstats_list(pstats_list))
+
+    def test_160_print_None(self):
+        self.assertFalse(print_pstats_list(None))
+
 
 if __name__ == '__main__':
     import sys

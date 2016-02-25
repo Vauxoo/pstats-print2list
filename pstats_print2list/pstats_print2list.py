@@ -118,9 +118,12 @@ def print_pstats_list(pstats, pformat=None):
         ncalls, tottime, tt_percall, cumtime, ct_percall, file, lineno, method
         Default: "{ncalls:10s} {tottime:10s} {tt_percall:10s} {cumtime:10s}
                  {ct_percall:10s} {file}:{lineno} ({method})"
-    :return: Directly print of result formatted"""
+    :return: Directly print of result formatted and return True"""
+    if not pstats:
+        return False
     if pformat is None:
         pformat = "{ncalls:10s} {tottime:10s} {tt_percall:10s} " + \
             "{ct_percall:10s} {file}:{lineno} ({method})"
     for pstat_line in [dict(zip(get_field_list(), get_field_list()))] + pstats:
         print(pformat.format(**pstat_line))
+    return True

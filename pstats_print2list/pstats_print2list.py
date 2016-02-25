@@ -2,6 +2,7 @@
 
 from __future__ import print_function
 
+import os
 import pstats
 import re
 import StringIO
@@ -69,10 +70,12 @@ def get_pstats_print2list(fnames, filter_fnames=None, exclude_fnames=None,
 
     if isinstance(fnames, basestring):
         fnames = [fnames]
+    fnames_expanded = [
+        os.path.expandvars(os.path.expanduser(fname)) for fname in fnames]
     stream = StringIO.StringIO()
     try:
         stats = pstats.Stats(fnames[0], stream=stream)
-        for fname in fnames[1:]:
+        for fname in fnames_expanded[1:]:
             stats.add(fname)
     except TypeError:
         print("No cProfile stats valid.")

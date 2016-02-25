@@ -40,9 +40,29 @@ Installation
 Usage
 -----
 
- * ``import pstats_print2list;print pstats_print2list.get_pstats_print2list.__doc__``
- * ``import pstats_print2list;print pstats_print2list.get_pstats_print2list([fname_stat1, fname_stat2])``
+ * Small example:
+.. code-block:: python
 
+   import pstats_print2list
+   print "Method docstring", pstats_print2list.get_pstats_print2list.__doc__
+   pstats_list = pstats_print2list.get_pstats_print2list(['fname_stat1', 'fname_stat2'])
+   print_pstats_list(pstats_list)
+..
+
+ * Full example:
+.. code-block:: python
+
+    from pstats_print2list import get_pstats_print2list, print_pstats_list
+    fname_stats = 'my_profiling_out.stats'
+    pstats_list = get_pstats_print2list(
+        os.path.expanduser(fname_stats),
+        filter_fnames=['myfile1.py', 'myfile2.py', 'root_path1'],
+        exclude_fnames=['dontshow.py', 'path_dont_show'],
+        sort='cumulative',
+        limit=5,
+    )
+    print_pstats_list(pstats_list)
+..
 
 Credits
 -------

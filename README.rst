@@ -55,7 +55,7 @@ Usage
     from pstats_print2list import get_pstats_print2list, print_pstats_list
     fname_stats = 'my_profiling_out.stats'
     pstats_list = get_pstats_print2list(
-        os.path.expanduser(fname_stats),
+        fname_stats,
         filter_fnames=['myfile1.py', 'myfile2.py', 'root_path1'],
         exclude_fnames=['dontshow.py', 'path_dont_show'],
         sort='cumulative',

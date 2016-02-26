@@ -46,7 +46,7 @@ Usage
    import pstats_print2list
    print "Method docstring", pstats_print2list.get_pstats_print2list.__doc__
    pstats_list = pstats_print2list.get_pstats_print2list(['fname_stat1', 'fname_stat2'])
-   print_pstats_list(pstats_list)
+   pstats_print2list.print_pstats_list(pstats_list)
 ..
 
  * Full example:

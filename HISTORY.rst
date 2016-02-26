@@ -6,3 +6,7 @@ History
 ------------------
 
 * First release on PyPI.
+
+1.1.2 (2016-02-26)
+
+* First stable version

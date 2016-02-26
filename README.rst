@@ -43,15 +43,19 @@ Usage
 -----
 
  * Small example:
+
 .. code-block:: python
 
    import pstats_print2list
    print "Method docstring", pstats_print2list.get_pstats_print2list.__doc__
    pstats_list = pstats_print2list.get_pstats_print2list(['fname_stat1', 'fname_stat2'])
    pstats_print2list.print_pstats_list(pstats_list)
+
 ..
 
+
  * Full example:
+
 .. code-block:: python
 
     from pstats_print2list import get_pstats_print2list, print_pstats_list

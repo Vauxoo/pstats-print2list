@@ -30,6 +30,8 @@ Features
  * Add the posiblity of get profiling report pstats result in a list.
  * Add the posibility of sort the result with a default pstats index.
  * Add the posilibity of add a limit to result.
+ * Add the posibility of filter by paths or files.
+ * Add the posibility of exclude paths or files.
 
 
 Installation

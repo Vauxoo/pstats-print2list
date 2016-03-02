@@ -8,6 +8,8 @@ test_get_pstats_print2list
 Tests for `get_pstats_print2list` module.
 """
 
+from __future__ import print_function
+
 import os
 import unittest
 from cProfile import Profile
@@ -124,6 +126,7 @@ class TestPstatsPrint2list(unittest.TestCase):
 
     def test_140_print_list(self):
         pstats_list = get_pstats_print2list(self.fstats_fib)
+        print("\n")
         self.assertTrue(print_pstats_list(pstats_list))
 
     def test_150_print_empty_list(self):

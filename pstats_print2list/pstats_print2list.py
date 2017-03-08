@@ -95,7 +95,7 @@ def get_pstats_print2list(fnames, filter_fnames=None, exclude_fnames=None,
     stream.seek(0)
     field_list = get_field_list()
     line_stats_re = re.compile(
-        r'(?P<%s>\d+/?\d+)\s+(?P<%s>\d+\.?\d+)\s+(?P<%s>\d+\.?\d+)\s+'
+        r'(?P<%s>\d+/?\d+|\d+)\s+(?P<%s>\d+\.?\d+)\s+(?P<%s>\d+\.?\d+)\s+'
         r'(?P<%s>\d+\.?\d+)\s+(?P<%s>\d+\.?\d+)\s+(?P<%s>.*):(?P<%s>\d+)'
         r'\((?P<%s>.*)\)' % tuple(field_list))
     stats_list = []

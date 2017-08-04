@@ -106,8 +106,11 @@ def get_pstats_print2list(fnames, filter_fnames=None, exclude_fnames=None,
         fname = line_stats_match.group('file') if line_stats_match else None
         if fname and is_fname_match(fname, filter_fnames) and \
                 not is_exclude(fname, exclude_fnames):
-            stats_list.append(dict([(field, line_stats_match.group(field))
-                              for field in field_list]))
+            data = dict([(field, line_stats_match.group(field))
+                         for field in field_list])
+            data['rcalls'], data['calls'] = (
+                data.get('ncalls', '') + '/').split('/')[:2]
+            stats_list.append(data)
             count += 1
             if limit and count >= limit:
                 break
@@ -125,8 +128,9 @@ def print_pstats_list(pstats, pformat=None):
     if not pstats:
         return False
     if pformat is None:
-        pformat = "{ncalls:10s} {tottime:10s} {tt_percall:10s} " + \
-            "{cumtime:10s} {ct_percall:10s} {file}:{lineno} ({method})"
-    for pstat_line in [dict(zip(get_field_list(), get_field_list()))] + pstats:
+        pformat = ("{method:40s} {calls:10s} {rcalls:10s} {tottime:10s} "
+                   "{tt_percall:10s} {cumtime:10s} {ct_percall:10s} "
+                   "{file}:{lineno}")
+    for pstat_line in [dict(zip(pstats[0].keys(), pstats[0].keys()))] + pstats:
         print(pformat.format(**pstat_line))
     return True

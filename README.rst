@@ -54,6 +54,13 @@ Usage
 ..
 
 
+ * Small line command example:
+ 
+ .. code-block:: bash
+ 
+ python -c "from pstats_print2list import get_pstats_print2list, print_pstats_list;print print_pstats_list(get_pstats_print2list('YOUR_FILE'))"
+
+
  * Full example:
 
 .. code-block:: python

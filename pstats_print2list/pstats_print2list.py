@@ -87,10 +87,6 @@ def get_pstats_print2list(fnames, filter_fnames=None, exclude_fnames=None,
         print("Error to open file.")
         return False
 
-    if sort:
-        stats.sort_stats(sort)
-    if sort_reverse:
-        stats.reverse_order()
     stats.print_stats()
     stream.seek(0)
     field_list = get_field_list()
@@ -106,12 +102,19 @@ def get_pstats_print2list(fnames, filter_fnames=None, exclude_fnames=None,
         fname = line_stats_match.group('file') if line_stats_match else None
         if fname and is_fname_match(fname, filter_fnames) and \
                 not is_exclude(fname, exclude_fnames):
-            stats_list.append(dict([(field, line_stats_match.group(field))
-                              for field in field_list]))
+            data = dict([(field, line_stats_match.group(field))
+                         for field in field_list])
+            data['rcalls'], data['calls'] = (
+                data.get('ncalls', '') + '/' + data.get('ncalls', '')
+            ).split('/')[:2]
+            data['factor'] = "%.2f" % (
+                (float(data['rcalls']) - float(data['calls']) + 1) *
+                float(data['cumtime']))
+            data['cumulative'] = data['cumtime']
+            stats_list.append(data)
             count += 1
-            if limit and count >= limit:
-                break
-    return stats_list
+    return sorted(stats_list, key=lambda key: float(key[sort or 'factor']),
+                  reverse=not sort_reverse)[:limit]
 
 
 def print_pstats_list(pstats, pformat=None):
@@ -119,14 +122,15 @@ def print_pstats_list(pstats, pformat=None):
     :param list pstats: pstats dicts to print
     :param str format: String.format style to show fields with keys:
         ncalls, tottime, tt_percall, cumtime, ct_percall, file, lineno, method
-        Default: "{ncalls:10s} {tottime:10s} {tt_percall:10s} {cumtime:10s}
-                 {ct_percall:10s} {file}:{lineno} ({method})"
+        rcalls, calls
     :return: Directly print of result formatted and return True"""
     if not pstats:
         return False
     if pformat is None:
-        pformat = "{ncalls:10s} {tottime:10s} {tt_percall:10s} " + \
-            "{cumtime:10s} {ct_percall:10s} {file}:{lineno} ({method})"
-    for pstat_line in [dict(zip(get_field_list(), get_field_list()))] + pstats:
+        pformat = ("{method:<40s} {factor:>16s} {cumtime:>10s} "
+                   "{calls:>10s} {rcalls:>10s} {tottime:>10s} "
+                   "{tt_percall:>10s} {ct_percall:>10s} "
+                   "<{file}:{lineno}")
+    for pstat_line in [dict(zip(pstats[0].keys(), pstats[0].keys()))] + pstats:
         print(pformat.format(**pstat_line))
     return True

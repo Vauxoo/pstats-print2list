@@ -113,10 +113,8 @@ def get_pstats_print2list(fnames, filter_fnames=None, exclude_fnames=None,
             data['cumulative'] = data['cumtime']
             stats_list.append(data)
             count += 1
-            if limit and count >= limit:
-                break
     return sorted(stats_list, key=lambda key: float(key[sort or 'factor']),
-                  reverse=not sort_reverse)
+                  reverse=not sort_reverse)[:limit]
 
 
 def print_pstats_list(pstats, pformat=None):

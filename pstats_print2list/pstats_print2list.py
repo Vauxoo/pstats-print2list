@@ -122,8 +122,7 @@ def print_pstats_list(pstats, pformat=None):
     :param list pstats: pstats dicts to print
     :param str format: String.format style to show fields with keys:
         ncalls, tottime, tt_percall, cumtime, ct_percall, file, lineno, method
-        Default: "{ncalls:10s} {tottime:10s} {tt_percall:10s} {cumtime:10s}
-                 {ct_percall:10s} {file}:{lineno} ({method})"
+        rcalls, calls
     :return: Directly print of result formatted and return True"""
     if not pstats:
         return False

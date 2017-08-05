@@ -109,7 +109,8 @@ def get_pstats_print2list(fnames, filter_fnames=None, exclude_fnames=None,
             data = dict([(field, line_stats_match.group(field))
                          for field in field_list])
             data['rcalls'], data['calls'] = (
-                data.get('ncalls', '') + '/').split('/')[:2]
+                data.get('ncalls', '') + '/' + data.get('ncalls', '')
+            ).split('/')[:2]
             stats_list.append(data)
             count += 1
             if limit and count >= limit:

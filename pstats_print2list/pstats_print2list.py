@@ -108,7 +108,7 @@ def get_pstats_print2list(fnames, filter_fnames=None, exclude_fnames=None,
                 data.get('ncalls', '') + '/' + data.get('ncalls', '')
             ).split('/')[:2]
             data['factor'] = "%.2f" % (
-                (float(data['rcalls']) - float(data['calls'])) *
+                (float(data['rcalls']) - float(data['calls']) + 1) *
                 float(data['cumtime']))
             data['cumulative'] = data['cumtime']
             stats_list.append(data)

@@ -131,10 +131,10 @@ def print_pstats_list(pstats, pformat=None):
     if not pstats:
         return False
     if pformat is None:
-        pformat = ("{method:40s} {factor:16s} "
-                   "{calls:10s} {rcalls:10s} {tottime:10s} "
-                   "{tt_percall:10s} {cumtime:10s} {ct_percall:10s} "
-                   "{file}:{lineno}")
+        pformat = ("{method:<40s} {factor:>16s} {cumtime:>10s} "
+                   "{calls:>10s} {rcalls:>10s} {tottime:>10s} "
+                   "{tt_percall:>10s} {ct_percall:>10s} "
+                   "<{file}:{lineno}")
     for pstat_line in [dict(zip(pstats[0].keys(), pstats[0].keys()))] + pstats:
         print(pformat.format(**pstat_line))
     return True

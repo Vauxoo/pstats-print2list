@@ -87,10 +87,6 @@ def get_pstats_print2list(fnames, filter_fnames=None, exclude_fnames=None,
         print("Error to open file.")
         return False
 
-    if sort:
-        stats.sort_stats(sort)
-    if sort_reverse:
-        stats.reverse_order()
     stats.print_stats()
     stream.seek(0)
     field_list = get_field_list()
@@ -112,13 +108,15 @@ def get_pstats_print2list(fnames, filter_fnames=None, exclude_fnames=None,
                 data.get('ncalls', '') + '/' + data.get('ncalls', '')
             ).split('/')[:2]
             data['factor'] = "%.2f" % (
-                    (float(data['rcalls']) - float(data['calls']))
-                    * float(data['cumtime']))
+                (float(data['rcalls']) - float(data['calls'])) *
+                float(data['cumtime']))
+            data['cumulative'] = data['cumtime']
             stats_list.append(data)
             count += 1
             if limit and count >= limit:
                 break
-    return stats_list
+    return sorted(stats_list, key=lambda key: float(key[sort or 'factor']),
+                  reverse=not sort_reverse)
 
 
 def print_pstats_list(pstats, pformat=None):

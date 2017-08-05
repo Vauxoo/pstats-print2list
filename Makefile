@@ -60,8 +60,8 @@ coverage:
 	python ./tests/demo/profile_fibonacci_raw.py
 	coverage run --source pstats_print2list setup.py test
 	coverage report -m
-	coverage html
-	$(BROWSER) htmlcov/index.html
+#	coverage html  # Don't allow open from non-interactive like as travis ci
+#	$(BROWSER) htmlcov/index.html
 
 docs:
 	rm -f docs/pstats_print2list.rst

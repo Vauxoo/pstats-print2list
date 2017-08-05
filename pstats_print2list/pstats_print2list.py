@@ -111,7 +111,9 @@ def get_pstats_print2list(fnames, filter_fnames=None, exclude_fnames=None,
             data['rcalls'], data['calls'] = (
                 data.get('ncalls', '') + '/' + data.get('ncalls', '')
             ).split('/')[:2]
-            data['factor'] = (data['rcalls'] - data['calls']) * data['cumtime']
+            data['factor'] = "%.2f" % (
+                    (float(data['rcalls']) - float(data['calls']))
+                    * float(data['cumtime']))
             stats_list.append(data)
             count += 1
             if limit and count >= limit:
@@ -129,7 +131,7 @@ def print_pstats_list(pstats, pformat=None):
     if not pstats:
         return False
     if pformat is None:
-        pformat = ("{method:40s} {factor:10s} "
+        pformat = ("{method:40s} {factor:16s} "
                    "{calls:10s} {rcalls:10s} {tottime:10s} "
                    "{tt_percall:10s} {cumtime:10s} {ct_percall:10s} "
                    "{file}:{lineno}")

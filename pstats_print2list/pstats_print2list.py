@@ -5,16 +5,11 @@ from __future__ import print_function
 import os
 import pstats
 import re
+from six import string_types
 try:
-    import StringIO
+    from StringIO import StringIO
 except ImportError:
     from io import StringIO
-
-
-try:
-    basestring
-except NameError:
-    basestring = str
 
 
 def get_field_list():
@@ -29,7 +24,7 @@ def get_field_list():
 
 
 def is_fname_match(fname, fmatch_list):
-    if isinstance(fmatch_list, basestring):
+    if isinstance(fmatch_list, string_types):
         fmatch_list = [fmatch_list]
     if not fmatch_list:
         return True
@@ -42,7 +37,7 @@ def is_fname_match(fname, fmatch_list):
 def is_exclude(fname, exclude_fnames):
     if exclude_fnames is None:
         exclude_fnames = []
-    if isinstance(exclude_fnames, basestring):
+    if isinstance(exclude_fnames, string_types):
         exclude_fnames = [exclude_fnames]
     for exclude_fname in exclude_fnames:
         if exclude_fname in fname:
@@ -77,11 +72,11 @@ def get_pstats_print2list(fnames, filter_fnames=None, exclude_fnames=None,
         and limited.
     """
 
-    if isinstance(fnames, basestring):
+    if isinstance(fnames, string_types):
         fnames = [fnames]
     fnames_expanded = [
         os.path.expandvars(os.path.expanduser(fname)) for fname in fnames]
-    stream = StringIO.StringIO()
+    stream = StringIO()
     try:
         stats = pstats.Stats(fnames[0], stream=stream)
         for fname in fnames_expanded[1:]:

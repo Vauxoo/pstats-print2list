@@ -24,7 +24,7 @@ test_requirements = [
 
 setup(
     name='pstats_print2list',
-    version='1.1.7',
+    version='1.1.8',
     description="Add to pstats library of cProfile the feature of get the result in a list with filters, limit and sort.",
     long_description=readme + '\n\n' + history,
     author="Vauxoo",
